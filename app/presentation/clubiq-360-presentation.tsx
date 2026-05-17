@@ -39,6 +39,22 @@ interface MobileAppSlide {
   feature: MobileFeatureKey;
 }
 
+type BackofficeFeatureKey =
+  | "centralized-management"
+  | "organized-secretary"
+  | "backups"
+  | "evolution-base"
+  | "backoffice-capabilities"
+  | "backoffice-pricing";
+
+interface BackofficeSlide {
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  feature: BackofficeFeatureKey;
+}
+
 const mobileAppSlides: MobileAppSlide[] = [
   { id: "parte-9-1", eyebrow: "A Solução", title: "Reduzimos o atrito administrativo em 99%", body: "", feature: "payment-demo" },
   { id: "parte-9-2", eyebrow: "A Solução", title: "Reduzimos o atrito administrativo em 99%", body: "", feature: "closed-office" },
@@ -52,11 +68,58 @@ const mobileAppSlides: MobileAppSlide[] = [
   { id: "parte-9-10", eyebrow: "Calculadora Final", title: "Calculadora final de benefícios", body: "", feature: "final-benefits" },
 ];
 
+const backofficeSlides: BackofficeSlide[] = [
+  {
+    id: "parte-7-1",
+    eyebrow: "BackOffice",
+    title: "Gestão centralizada",
+    body: "Toda a operação do clube num único painel: sócios, quotas, eventos e histórico.",
+    feature: "centralized-management",
+  },
+  {
+    id: "parte-7-2",
+    eyebrow: "BackOffice",
+    title: "Secretaria organizada",
+    body: "Processos claros e rápidos para reduzir tarefas repetitivas e erros manuais.",
+    feature: "organized-secretary",
+  },
+  {
+    id: "parte-7-3",
+    eyebrow: "BackOffice",
+    title: "Dados guardados com backups constantes",
+    body: "Registos protegidos e histórico seguro para garantir continuidade e confiança.",
+    feature: "backups",
+  },
+  {
+    id: "parte-7-4",
+    eyebrow: "BackOffice",
+    title: "Base pronta para evoluir",
+    body: "Estrutura preparada para crescer com novas integrações, automações e canais digitais.",
+    feature: "evolution-base",
+  },
+  {
+    id: "parte-7-5",
+    eyebrow: "BackOffice",
+    title: "Tudo o que precisa para operar",
+    body: "Registo de sócios, dados de pagamentos, quotas especiais e integração com cartões físicos.",
+    feature: "backoffice-capabilities",
+  },
+  {
+    id: "parte-7-6",
+    eyebrow: "Pricing",
+    title: "Preço",
+    body: "",
+    feature: "backoffice-pricing",
+  },
+];
+
 const timelineMoments: Record<
   MomentKey,
-  { month: string; title: string; detail: string }
+  { month: string; title: string; detail: string; imageSrc?: string; imageAlt?: string }
 > = {
   fev: {
+    imageSrc: "/PrimeiroLancamento.png",
+    imageAlt: "Lançamento da primeira app",
     month: "Fevereiro",
     title: "Lançamento da primeira app",
     detail: "A.D.Oeiras Official App",
@@ -72,16 +135,22 @@ const timelineMoments: Record<
     detail: "Reforço da equipa de entrega",
   },
   "abr-a": {
+    imageSrc: "/ClubIQUE.png",
+    imageAlt: "Registo na União Europeia",
     month: "Abril",
     title: "Registo na União Europeia",
     detail: "Consolidação legal da marca",
   },
   "abr-b": {
+    imageSrc: "/MurchesWebsite.png",
+    imageAlt: "Site do GRF Murches",
     month: "Abril",
     title: "Desenvolvimento do site do GRF Murches",
     detail: "Projeto web em execução para o clube",
   },
   mai: {
+    imageSrc: "/ClubiqWebsite.png",
+    imageAlt: "Website ClubIQ",
     month: "Maio",
     title: "Desenvolvimento e lançamento do nosso site",
     detail: "Site ClubIQ publicado e ativo",
@@ -277,7 +346,7 @@ export default function ClubIQ360Presentation({
                 onChoose={(choice) => {
                   setPathChoice(choice);
                   if (choice === "backoffice") {
-                    setCurrentSlideId("parte-7");
+                    setCurrentSlideId("parte-7-1");
                   }
                   if (choice === "website") {
                     setCurrentSlideId("parte-8");
@@ -288,7 +357,11 @@ export default function ClubIQ360Presentation({
                 }}
               />
             ) : null}
-            {currentSlide.id === "parte-7" ? <Part7BackOffice /> : null}
+            {currentSlide.id.startsWith("parte-7-") ? (
+              <Part7BackOfficeDeck
+                slide={backofficeSlides.find((item) => item.id === currentSlide.id) ?? backofficeSlides[0]}
+              />
+            ) : null}
             {currentSlide.id === "parte-7b" ? <Part7BackOfficeModel /> : null}
             {currentSlide.id === "parte-8" ? <Part8Website /> : null}
             {currentSlide.id === "parte-8b" ? <Part8WebsiteModel /> : null}
@@ -372,7 +445,14 @@ function buildSlides(pathChoice: PathChoice): SlideDescriptor[] {
   ];
 
   if (pathChoice === "backoffice") {
-    return [...base, { id: "parte-7", label: "Parte 7" }, { id: "parte-7b", label: "Parte 7.2" }];
+    return [
+      ...base,
+      ...backofficeSlides.map((slide, index) => ({
+        id: slide.id,
+        label: `Parte 7.${index + 1}`,
+      })),
+      { id: "parte-7b", label: "Parte 7.7" },
+    ];
   }
 
   if (pathChoice === "website") {
@@ -726,14 +806,34 @@ function Part3Timeline({
         </div>
       </div>
       <div className="section-shell mt-2 rounded-[34px] p-7">
-        <p className="eyebrow-label font-display text-[var(--brand-orange)]">
-          Destaque
-        </p>
-        <p className="mt-2 text-[18px] font-bold uppercase tracking-[0.12em] text-slate-300">
-          {active.month}
-        </p>
-        <h3 className="mt-4 text-[42px] font-semibold text-white">{active.title}</h3>
-        <p className="mt-4 text-[26px] font-semibold text-slate-100">{active.detail}</p>
+        <div className="grid h-full grid-cols-[1.05fr_0.95fr] items-center gap-6">
+          <div>
+            <p className="eyebrow-label font-display text-[var(--brand-orange)]">
+              Destaque
+            </p>
+            <p className="mt-2 text-[18px] font-bold uppercase tracking-[0.12em] text-slate-300">
+              {active.month}
+            </p>
+            <h3 className="mt-4 text-[42px] font-semibold text-white">{active.title}</h3>
+            <p className="mt-4 text-[26px] font-semibold text-slate-100">{active.detail}</p>
+          </div>
+          <div className="flex justify-end">
+            {active.imageSrc ? (
+              <div
+                className={`relative overflow-hidden rounded-[20px] border border-white/18 bg-white/5 ${
+                  activeMoment === "fev" ? "h-[300px] w-[540px]" : "h-[260px] w-[460px]"
+                }`}
+              >
+                <Image
+                  src={active.imageSrc}
+                  alt={active.imageAlt ?? active.title}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ) : null}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -1475,6 +1575,135 @@ function SolutionPathButton({
 
 function Part7BackOffice() {
   return <RouteIntro title="BackOffice" subtitle="Organização e controlo operacional do clube." />;
+}
+
+function Part7BackOfficeDeck({ slide }: { slide: BackofficeSlide }) {
+  return (
+    <div className="grid h-full grid-rows-[auto_1fr] gap-8">
+      <h2 className="huge-title -mt-20 pl-28 text-[58px] text-white">BackOffice</h2>
+      <div className="grid h-full grid-cols-[1.05fr_0.95fr] items-center gap-8">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[var(--club-secondary)]/90">
+            {slide.eyebrow}
+          </p>
+          <h3 className="mt-3 text-[68px] font-semibold uppercase leading-[1.02] tracking-[-0.02em] text-white">
+            {slide.title}
+          </h3>
+          {slide.body ? (
+            <p className="mt-5 max-w-[760px] text-[22px] font-semibold leading-[1.28] text-slate-200">
+              {slide.body}
+            </p>
+          ) : null}
+        </div>
+        <BackofficeFeatureVisual feature={slide.feature} />
+      </div>
+    </div>
+  );
+}
+
+function BackofficeFeatureVisual({ feature }: { feature: BackofficeFeatureKey }) {
+  if (feature === "backoffice-pricing") {
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-white/[0.04] p-8">
+        <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--club-secondary)]">Planos</p>
+        <div className="mt-5 grid gap-4">
+          <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
+            <p className="text-[20px] font-bold text-white">Sem pagamentos</p>
+            <p className="mt-2 text-[44px] font-black text-[var(--club-primary)]">20€/mês</p>
+          </div>
+          <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
+            <p className="text-[20px] font-bold text-white">Com pagamentos</p>
+            <p className="mt-2 text-[44px] font-black text-[var(--club-secondary)]">30€/mês</p>
+            <p className="mt-2 text-[22px] font-bold text-white/90">+ 2,5% dos pagamentos</p>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+      <div className="mb-4 flex flex-wrap gap-2">
+        {["Sócios", "Pagamentos", "Eventos", "Relatórios"].map((chip) => (
+          <span key={chip} className="rounded-full border border-white/16 bg-white/8 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.08em] text-white/90">
+            {chip}
+          </span>
+        ))}
+      </div>
+
+      {feature === "centralized-management" ? (
+        <div className="grid h-full grid-cols-2 gap-3">
+          <MiniBoardCard title="Sócios" value="1.248" />
+          <MiniBoardCard title="Quotas" value="€ 8.340" />
+          <MiniBoardCard title="Eventos" value="36" />
+          <MiniBoardCard title="Relatórios" value="24" />
+        </div>
+      ) : null}
+
+      {feature === "organized-secretary" ? (
+        <div className="space-y-3">
+          {["Registo de sócio", "Atualizar dados", "Confirmar pagamento", "Emitir comprovativo"].map((step, idx) => (
+            <div key={step} className="flex items-center gap-3 rounded-xl border border-white/12 bg-white/6 px-4 py-3">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[var(--club-secondary)]/25 text-[14px] font-black text-[var(--club-secondary)]">{idx + 1}</span>
+              <p className="text-[16px] font-semibold text-white">{step}</p>
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {feature === "backups" ? (
+        <div className="grid h-full grid-rows-[auto_1fr_auto] gap-4">
+          <div className="rounded-xl border border-white/12 bg-white/6 px-4 py-3 text-[16px] font-semibold text-white">Backups automáticos diários</div>
+          <div className="rounded-xl border border-white/12 bg-white/6 p-4">
+            <div className="h-4 w-full rounded-full bg-white/10">
+              <div className="h-4 w-[92%] rounded-full bg-[var(--club-secondary)]" />
+            </div>
+            <p className="mt-3 text-[14px] font-semibold text-slate-200">Integridade de dados: 99.9%</p>
+          </div>
+          <div className="rounded-xl border border-white/12 bg-[#0f172a] px-4 py-3 text-[14px] font-semibold text-white/85">Histórico recuperável por data e operação</div>
+        </div>
+      ) : null}
+
+      {feature === "evolution-base" ? (
+        <div className="grid grid-cols-2 gap-3">
+          {[
+            "Pagamentos por email",
+            "Integração App",
+            "Integração Website",
+            "Cartão físico + digital",
+          ].map((item) => (
+            <div key={item} className="rounded-xl border border-white/12 bg-white/6 px-4 py-4 text-[15px] font-semibold text-white">
+              {item}
+            </div>
+          ))}
+        </div>
+      ) : null}
+
+      {feature === "backoffice-capabilities" ? (
+        <div className="space-y-3">
+          {[
+            "Registo completo de sócios e dados",
+            "Histórico e controlo de pagamentos",
+            "Gestão simples de descontos e quotas especiais",
+            "Integração com cartões de sócio físicos",
+          ].map((item) => (
+            <div key={item} className="rounded-xl border border-white/12 bg-white/6 px-4 py-3 text-[16px] font-semibold text-white">
+              {item}
+            </div>
+          ))}
+        </div>
+      ) : null}
+    </article>
+  );
+}
+
+function MiniBoardCard({ title, value }: { title: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-white/12 bg-[#0f1f38] p-4">
+      <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-white/60">{title}</p>
+      <p className="mt-2 text-[30px] font-semibold text-white">{value}</p>
+    </div>
+  );
 }
 
 function Part7BackOfficeModel() {
