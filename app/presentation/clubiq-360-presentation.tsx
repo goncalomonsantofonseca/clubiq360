@@ -2062,10 +2062,7 @@ function Part9MobileDeck({
   const isOeirasSlide = slide.feature === "oeiras-results";
   const isSponsorDataSlide = slide.feature === "sponsor-data";
   const isFinalBenefitsSlide = slide.feature === "final-benefits";
-  const resolvedTitle =
-    slide.feature === "intro"
-      ? `Universo Digital do ${clubName}`
-      : slide.title;
+  const resolvedTitle = slide.title;
 
   if (isFinalBenefitsSlide) {
     return (
