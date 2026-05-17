@@ -136,3 +136,545 @@ button {
   color: var(--brand-white);
   backdrop-filter: blur(20px);
 }
+
+.clubiq-payment-exact .phone-showcase {
+  display: grid;
+  justify-items: center;
+}
+
+.clubiq-payment-exact .phone-stage {
+  position: relative;
+  width: min(38vw, 330px);
+  display: flex;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.clubiq-payment-exact .phone-shadow {
+  position: absolute;
+  bottom: 0.5rem;
+  width: 60%;
+  height: 24px;
+  border-radius: 999px;
+  background: rgba(88, 60, 60, 0.18);
+  filter: blur(18px);
+}
+
+.clubiq-payment-exact .phone-shell {
+  position: relative;
+  width: min(36vw, 255px);
+  aspect-ratio: 0.52;
+  padding: 10px;
+  border-radius: 3.2rem;
+  background: linear-gradient(140deg, #111214 0%, #2b2c2f 28%, #efefef 100%);
+  transform: rotate(6deg);
+  box-shadow: 0 36px 56px rgba(90, 68, 68, 0.24), inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+}
+
+.app-payment-boost .clubiq-payment-exact .phone-stage {
+  width: min(50vw, 430px);
+}
+
+.app-payment-boost .clubiq-payment-exact .phone-shell {
+  width: min(46vw, 330px);
+}
+
+.clubiq-payment-exact .phone-shell-animating {
+  animation: clubiqPhoneFloat 3.2s ease-in-out infinite;
+}
+
+.clubiq-payment-exact .phone-metal {
+  position: absolute;
+  inset: 5px;
+  border-radius: 2.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  pointer-events: none;
+}
+
+.clubiq-payment-exact .phone-screen {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 2.7rem;
+  background: #f7f7f7;
+}
+
+.clubiq-payment-exact .phone-notch {
+  position: absolute;
+  top: 0.9rem;
+  left: 50%;
+  width: 34%;
+  height: 1.5rem;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #0f1012;
+  z-index: 3;
+}
+
+.clubiq-payment-exact .status-bar {
+  position: absolute;
+  inset: 1rem 1.2rem auto;
+  display: flex;
+  justify-content: space-between;
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  z-index: 4;
+}
+
+.clubiq-payment-exact .payment-app {
+  position: relative;
+  height: 100%;
+  padding-top: 2.65rem;
+  background: linear-gradient(180deg, #fbfbfb 0%, #f3f4f7 100%);
+  overflow: hidden;
+}
+
+.clubiq-payment-exact .payment-topbar {
+  display: grid;
+  grid-template-columns: 28px 1fr 28px;
+  align-items: center;
+  padding: 0.8rem 0.85rem;
+  background: var(--club-primary);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+
+.clubiq-payment-exact .payment-home,
+.clubiq-payment-exact .payment-plan-screen,
+.clubiq-payment-exact .payment-confirm-screen,
+.clubiq-payment-exact .payment-checkout-screen,
+.clubiq-payment-exact .mbway-screen {
+  padding: 0.9rem;
+}
+
+.clubiq-payment-exact .payment-brand-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #fff;
+  background: var(--club-primary);
+  margin: -0.9rem -0.9rem 0;
+  padding: 0.7rem 0.9rem 1rem;
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+.clubiq-payment-exact .payment-home h3 {
+  margin: 0.8rem 0;
+  font-size: 1.65rem;
+  line-height: 1.05;
+  color: #29303a;
+}
+
+.clubiq-payment-exact .payment-member-card {
+  height: 118px;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(81, 43, 43, 0.84), rgba(124, 76, 76, 0.8));
+}
+
+.clubiq-payment-exact .payment-member-overlay {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.clubiq-payment-exact .payment-callout {
+  margin-top: 0.75rem;
+  padding: 0.7rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.92);
+  text-align: center;
+}
+
+.clubiq-payment-exact .payment-callout p,
+.clubiq-payment-exact .payment-plan-screen p,
+.clubiq-payment-exact .checkout-processing p {
+  margin: 0 0 0.6rem;
+  color: #6a717b;
+  line-height: 1.38;
+  font-size: 0.72rem;
+}
+
+.clubiq-payment-exact .payment-primary,
+.clubiq-payment-exact .payment-secondary,
+.clubiq-payment-exact .mbway-decline,
+.clubiq-payment-exact .mbway-pay {
+  border: 0;
+  border-radius: 0.85rem;
+  font: inherit;
+  font-weight: 700;
+}
+
+.clubiq-payment-exact .payment-primary {
+  width: 100%;
+  padding: 0.72rem 0.8rem;
+  background: #e52420;
+  color: #fff;
+  font-size: 0.73rem;
+}
+
+.clubiq-payment-exact .payment-fixed-button {
+  margin-top: 0.7rem;
+}
+
+.clubiq-payment-exact .plan-card,
+.clubiq-payment-exact .payment-summary-card {
+  padding: 0.7rem;
+  border-radius: 0.95rem;
+  background: rgba(255, 246, 246, 0.94);
+  border: 2px solid rgba(229, 36, 32, 0.22);
+}
+
+.clubiq-payment-exact .plan-option,
+.clubiq-payment-exact .summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.6rem 0.7rem;
+  border-radius: 0.75rem;
+  background: #fff;
+  margin-top: 0.45rem;
+  color: #2d3138;
+  align-items: center;
+  border: 2px solid transparent;
+  white-space: nowrap;
+  font-size: 0.72rem;
+}
+
+.clubiq-payment-exact .plan-option-selected { outline: 2px solid var(--club-primary); background: color-mix(in srgb, var(--club-primary) 12%, #fff); }
+.clubiq-payment-exact .summary-total { color: var(--club-primary); font-weight: 800; }
+.clubiq-payment-exact .payment-footer-actions,
+.clubiq-payment-exact .mbway-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 0.55rem; margin-top: 0.7rem; }
+.clubiq-payment-exact .payment-secondary { padding: 0.7rem; background: #eceef2; color: #75808e; font-size: 0.72rem; }
+.clubiq-payment-exact .checkout-brand { display: flex; align-items: center; justify-content: space-between; }
+.clubiq-payment-exact .checkout-cart { padding: 0.45rem 0.75rem; border-radius: 999px; background: var(--club-primary); color: #fff; font-weight: 800; font-size: 0.73rem; }
+.clubiq-payment-exact .checkout-steps { display: flex; gap: 0.6rem; margin: 0.65rem 0 0.8rem; }
+.clubiq-payment-exact .checkout-steps span { width: 26px; height: 26px; display: grid; place-items: center; border-radius: 999px; background: #d3d6db; color: #fff; font-weight: 800; font-size: 0.72rem; }
+.clubiq-payment-exact .checkout-steps .is-done { background: var(--club-primary); }
+.clubiq-payment-exact .checkout-form { display: grid; gap: 0.5rem; }
+.clubiq-payment-exact .checkout-form input { width: 100%; border: 1px solid #d9dde3; border-radius: 999px; padding: 0.55rem 0.75rem; font: inherit; color: #45505d; background: #fff; font-size: 0.72rem; }
+.clubiq-payment-exact .method-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.45rem; }
+.clubiq-payment-exact .method-grid span { display: grid; place-items: center; min-height: 36px; border-radius: 0.6rem; border: 1px solid #e1e4ea; background: #fff; font-weight: 800; color: #344255; font-size: 0.62rem; }
+.clubiq-payment-exact .method-grid .is-selected { border-color: var(--club-primary); color: var(--club-primary); }
+.clubiq-payment-exact .payment-primary.is-pressed,
+.clubiq-payment-exact .payment-secondary.is-pressed,
+.clubiq-payment-exact .mbway-pay.is-pressed,
+.clubiq-payment-exact .method-grid span.is-pressed,
+.clubiq-payment-exact .plan-option.is-pressed { transform: scale(0.98); filter: brightness(0.92); }
+.clubiq-payment-exact .checkout-processing { text-align: center; font-size: 0.7rem; }
+.clubiq-payment-exact .payment-notification-banner { display: grid; grid-template-columns: 36px 1fr; align-items: center; gap: 0.6rem; margin-bottom: 0.7rem; padding: 0.6rem 0.7rem; border-radius: 0.8rem; background: linear-gradient(180deg, color-mix(in srgb, var(--club-primary) 92%, #000), color-mix(in srgb, var(--club-primary) 72%, #000)); color: #fff; }
+.clubiq-payment-exact .payment-notification-icon { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 0.6rem; background: rgba(255,255,255,.92); color: var(--club-primary); font-weight: 900; }
+.clubiq-payment-exact .processing-spinner { width: 26px; height: 26px; margin: 0.5rem auto; border-radius: 999px; border: 3px solid rgba(36,31,29,.12); border-top-color: var(--club-primary); animation: spin 1s linear infinite; }
+.clubiq-payment-exact .mbway-screen { height: calc(100% - 54px); background: #171717; color: #f0f0f0; }
+.clubiq-payment-exact .mbway-notification-open { margin-bottom: 0.65rem; padding: 0.55rem 0.7rem; border-radius: 0.7rem; background: color-mix(in srgb, var(--club-primary) 84%, #000); color: #fff; text-align: center; font-size: 0.68rem; font-weight: 700; }
+.clubiq-payment-exact .mbway-card { margin: 0.75rem auto 0; width: 76%; padding: 0.85rem; border-radius: 0.85rem; background: linear-gradient(180deg, #3a3a3a, #252525); display: grid; justify-items: center; gap: 0.3rem; }
+.clubiq-payment-exact .mbway-card strong { font-size: 1.5rem; }
+.clubiq-payment-exact .mbway-card-icon { padding: 0.25rem 0.35rem; border-radius: 0.4rem; background: rgba(255, 255, 255, 0.1); font-weight: 800; }
+.clubiq-payment-exact .mbway-expiry { display: grid; justify-items: center; gap: 0.5rem; margin-top: 1rem; color: #cecece; font-size: 0.72rem; }
+.clubiq-payment-exact .mbway-circle { width: 72px; height: 72px; border-radius: 999px; display: grid; place-items: center; border: 6px solid rgba(255,255,255,.18); font-weight: 800; font-size: 0.8rem; }
+.clubiq-payment-exact .mbway-decline { padding: 0.68rem; background: color-mix(in srgb, var(--club-primary) 88%, #000); color: #fff; font-size: 0.72rem; }
+.clubiq-payment-exact .mbway-pay { padding: 0.68rem; background: color-mix(in srgb, var(--club-secondary) 48%, #111); color: #fff; font-size: 0.72rem; }
+.clubiq-payment-exact .mbway-pay.is-processing { background: var(--club-secondary); color: color-mix(in srgb, var(--club-secondary) 20%, #000); }
+.clubiq-payment-exact .mbway-processing-bar { width: 78%; height: 7px; margin: 0.7rem auto 0; border-radius: 999px; overflow: hidden; background: rgba(255,255,255,.14); }
+.clubiq-payment-exact .mbway-processing-bar::after { content: ""; display: block; width: 46%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, color-mix(in srgb, var(--club-secondary) 50%, #fff), var(--club-secondary)); animation: clubiqMbwayProgress 1.2s ease-in-out infinite alternate; }
+.clubiq-payment-exact .payment-timer-chip { position: absolute; right: 0.7rem; bottom: 0.7rem; padding: 0.4rem 0.65rem; border-radius: 999px; background: rgba(36,31,29,.88); color: #fff; font-size: 0.72rem; font-weight: 800; }
+.clubiq-payment-exact .payment-result-overlay { position: absolute; inset: 0; z-index: 6; display: grid; align-content: center; justify-items: center; gap: 0.7rem; opacity: 0; pointer-events: none; transform: translateY(18px); transition: opacity 280ms ease, transform 280ms ease; }
+.clubiq-payment-exact .payment-result-overlay.is-visible { opacity: 1; transform: translateY(0); }
+.clubiq-payment-exact .payment-overlay-toast { padding: 0.75rem 1rem; border-radius: 0.9rem; background: color-mix(in srgb, var(--club-secondary) 78%, #000); color: #fff; font-weight: 800; font-size: 0.8rem; text-align: center; }
+.clubiq-payment-exact .payment-overlay-time { min-width: min(430px, 68vw); padding: 1rem 1.2rem; border-radius: 1.1rem; background: rgba(255,255,255,.96); color: #24303c; text-align: center; border: 1px solid color-mix(in srgb, var(--club-primary) 18%, transparent); }
+.clubiq-payment-exact .payment-overlay-time span { display: block; color: #68717c; line-height: 1.3; font-size: 0.9rem; }
+.clubiq-payment-exact .payment-overlay-time strong { display: block; margin-top: 0.35rem; font-size: clamp(2rem, 3vw, 2.8rem); color: var(--club-primary); }
+.clubiq-payment-exact .final-member-card { padding: 0.85rem; border-radius: 1rem; background: radial-gradient(circle at top left, rgba(255,255,255,.16), transparent 28%), linear-gradient(135deg, color-mix(in srgb, var(--club-primary) 92%, #fff) 0%, color-mix(in srgb, var(--club-primary) 68%, #000) 100%); color: #fff; }
+.clubiq-payment-exact .final-member-card-header,
+.clubiq-payment-exact .final-member-card-body,
+.clubiq-payment-exact .final-member-footer { display: flex; justify-content: space-between; gap: 0.7rem; }
+.clubiq-payment-exact .final-member-card-header strong { font-size: 1.15rem; line-height: 1.05; display: block; }
+.clubiq-payment-exact .final-member-card-header span { margin-top: 0.15rem; font-size: 0.64rem; opacity: 0.9; display: block; }
+.clubiq-payment-exact .final-member-card-body { align-items: center; margin-top: 0.65rem; }
+.clubiq-payment-exact .final-member-avatar { width: 66px; height: 66px; border-radius: 0.7rem; background: rgba(255,255,255,.92); color: var(--club-primary); font-weight: 900; font-size: 1.15rem; display: grid; place-items: center; }
+.clubiq-payment-exact .final-member-qr { width: 84px; height: 84px; padding: 0.4rem; border-radius: 0.65rem; background: #fff; }
+.clubiq-payment-exact .final-member-qr span { display: block; width: 100%; height: 100%; border-radius: 0.35rem; background: repeating-linear-gradient(0deg, var(--club-primary) 0, var(--club-primary) 4px, #fff 4px, #fff 8px), repeating-linear-gradient(90deg, color-mix(in srgb, var(--club-primary) 88%, transparent) 0, color-mix(in srgb, var(--club-primary) 88%, transparent) 4px, transparent 4px, transparent 8px); }
+.clubiq-payment-exact .final-member-details { margin-top: 0.55rem; }
+.clubiq-payment-exact .final-member-details span,
+.clubiq-payment-exact .final-member-details strong,
+.clubiq-payment-exact .final-member-details small { display: block; }
+.clubiq-payment-exact .final-member-details span { font-size: 0.64rem; opacity: 0.86; }
+.clubiq-payment-exact .final-member-details strong { margin-top: 0.15rem; font-size: 1.05rem; }
+.clubiq-payment-exact .final-member-details small { margin-top: 0.1rem; font-size: 0.66rem; opacity: 0.92; }
+.clubiq-payment-exact .final-member-footer { margin-top: 0.6rem; padding-top: 0.55rem; border-top: 1px solid rgba(255,255,255,.24); align-items: center; font-size: 0.64rem; }
+
+@keyframes clubiqPhoneFloat {
+  0%, 100% { transform: rotate(6deg) translateY(0); }
+  50% { transform: rotate(7.2deg) translateY(-12px); }
+}
+
+@keyframes clubiqMbwayProgress {
+  0% { transform: translateX(-8%); }
+  100% { transform: translateX(40%); }
+}
+
+.part5-graph-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.graph-expand-out {
+  transform-origin: 50% 63%;
+  animation: graphExpandOut 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+  will-change: transform;
+}
+
+@keyframes graphExpandOut {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(-20vw, -1vh) scale(1.08);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-28vw, -4vh) scale(2.32);
+    opacity: 0.98;
+  }
+}
+
+.closed-office-card-visual span { position: absolute; }
+.member-visual span,
+.staff-visual span { position: absolute; }
+
+.member-visual,
+.staff-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.member-visual-small {
+  width: 118px;
+  height: 96px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+}
+
+.staff-visual-small {
+  width: 118px;
+  height: 96px;
+  flex: 0 0 auto;
+  overflow: hidden;
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+}
+
+.member-halo {
+  left: 50%;
+  top: 46%;
+  width: 124px;
+  height: 124px;
+  border-radius: 999px;
+  background: radial-gradient(circle, color-mix(in srgb, var(--club-primary) 35%, transparent), transparent 70%);
+  transform: translate(-50%, -50%);
+}
+
+.member-scarf-top {
+  left: 50%;
+  top: 16px;
+  width: 102px;
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    var(--club-primary) 0 20%,
+    var(--club-secondary) 20% 30%,
+    var(--club-primary) 30% 55%,
+    var(--club-secondary) 55% 65%,
+    var(--club-primary) 65% 90%,
+    var(--club-secondary) 90% 100%
+  );
+  transform: translateX(-50%);
+}
+
+.member-arm { top: 30px; width: 16px; height: 62px; border-radius: 999px; background: #2d2321; }
+.member-arm-left { left: calc(50% - 49px); transform: rotate(-34deg); }
+.member-arm-right { left: calc(50% + 33px); transform: rotate(34deg); }
+.member-head { left: 50%; top: 42px; width: 28px; height: 28px; border-radius: 999px; background: #f8fafc; border: 2px solid #0f172a; transform: translateX(-50%); }
+.member-body { left: 50%; top: 68px; width: 74px; height: 52px; border-radius: 1.2rem 1.2rem 0.8rem 0.8rem; background: #f8fafc; border: 2px solid #0f172a; transform: translateX(-50%); }
+.member-arm { background: #f8fafc; border: 2px solid #0f172a; }
+
+.staff-head { left: 50%; top: 24px; width: 28px; height: 28px; border-radius: 999px; background: #f8fafc; border: 2px solid #0f172a; transform: translateX(-50%); }
+.staff-body { left: 50%; top: 52px; width: 76px; height: 50px; border-radius: 1.2rem 1.2rem 0.8rem 0.8rem; background: #f8fafc; border: 2px solid #0f172a; transform: translateX(-50%); }
+.staff-arm { top: 70px; width: 14px; height: 38px; border-radius: 999px; background: #f8fafc; border: 2px solid #0f172a; }
+.staff-arm-left { left: calc(50% - 38px); transform: rotate(18deg); }
+.staff-arm-right { left: calc(50% + 24px); transform: rotate(-18deg); }
+.staff-desk { left: 50%; bottom: 14px; width: 136px; height: 12px; border-radius: 999px; background: linear-gradient(180deg, #5e636c, #363b45); transform: translateX(-50%); }
+.staff-screen { left: 50%; bottom: 34px; width: 64px; height: 40px; border-radius: 0.75rem; background: linear-gradient(180deg, #475569, #1e293b); border: 3px solid #2d2321; transform: translateX(-50%); }
+
+.quota-phone-mock {
+  position: relative;
+  width: min(420px, 100%);
+  height: 100%;
+  border-radius: 2rem;
+  border: 8px solid #0b0b0c;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--club-primary) 14%, #fff), #f8fafc 26%);
+  overflow: hidden;
+}
+
+.quota-phone-notch {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 120px;
+  height: 18px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: #0b0b0c;
+  z-index: 6;
+}
+
+.quota-phone-topbar {
+  position: relative;
+  z-index: 5;
+  margin-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--club-primary) 86%, #000);
+  color: white;
+}
+
+.quota-app-content {
+  position: absolute;
+  inset: 72px 10px 54px 10px;
+  display: grid;
+  place-items: center;
+}
+
+.quota-final-screen {
+  width: min(240px, 92%);
+  border-radius: 1rem;
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  background: linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0.08));
+  padding: 8px;
+}
+
+.quota-final-card {
+  border-radius: 0.85rem;
+  padding: 10px;
+  background: radial-gradient(circle at top left, rgba(255,255,255,.16), transparent 30%), linear-gradient(135deg, color-mix(in srgb, var(--club-primary) 92%, #fff) 0%, color-mix(in srgb, var(--club-primary) 68%, #000) 100%);
+  color: white;
+}
+
+.quota-final-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quota-final-head strong {
+  display: block;
+  font-size: 13px;
+}
+
+.quota-final-head span {
+  display: block;
+  font-size: 9px;
+  opacity: 0.9;
+}
+
+.quota-final-body {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.quota-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: rgba(255,255,255,.9);
+  color: var(--club-primary);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.quota-qr {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  background: #fff;
+  position: relative;
+}
+
+.quota-qr::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 4px;
+  background: repeating-linear-gradient(0deg, var(--club-primary) 0, var(--club-primary) 3px, #fff 3px, #fff 6px),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--club-primary) 80%, transparent) 0, color-mix(in srgb, var(--club-primary) 80%, transparent) 3px, transparent 3px, transparent 6px);
+}
+
+.quota-final-meta {
+  margin-top: 8px;
+}
+
+.quota-live-layer {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  top: 34px;
+  z-index: 8;
+  pointer-events: none;
+}
+
+.quota-live-notification {
+  border-radius: 1rem;
+  border: 1px solid rgba(203, 213, 225, 0.75);
+  background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,250,252,0.98));
+  padding: 8px 10px;
+  box-shadow: 0 14px 24px rgba(15, 23, 42, 0.22);
+  backdrop-filter: blur(8px);
+  animation: quotaPushDrop 5.8s ease;
+}
+
+.quota-push-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.quota-phone-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 14px;
+  background: color-mix(in srgb, var(--club-primary) 90%, #000);
+  text-align: center;
+}
+
+@keyframes quotaPushDrop {
+  0% { transform: translateY(-140%); opacity: 0; }
+  18% { transform: translateY(0); opacity: 1; }
+  92% { transform: translateY(0); opacity: 1; }
+  100% { transform: translateY(-10%); opacity: 0; }
+}
+
+.member-visual-small,
+.staff-visual-small {
+  display: block;
+}
