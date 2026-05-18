@@ -29,7 +29,8 @@ type MobileFeatureKey =
   | "sponsor-showcase"
   | "sponsor-data"
   | "oeiras-results"
-  | "final-benefits";
+  | "final-benefits"
+  | "mobile-pricing";
 
 interface MobileAppSlide {
   id: string;
@@ -55,6 +56,22 @@ interface BackofficeSlide {
   feature: BackofficeFeatureKey;
 }
 
+type WebsiteFeatureKey =
+  | "nextjs-design"
+  | "pages-catalog"
+  | "forms-options"
+  | "backoffice-integration"
+  | "always-updated"
+  | "website-pricing";
+
+interface WebsiteSlide {
+  id: string;
+  eyebrow: string;
+  title: string;
+  body: string;
+  feature: WebsiteFeatureKey;
+}
+
 const mobileAppSlides: MobileAppSlide[] = [
   { id: "parte-9-1", eyebrow: "A Solução", title: "Reduzimos o atrito administrativo em 99%", body: "", feature: "payment-demo" },
   { id: "parte-9-2", eyebrow: "A Solução", title: "Reduzimos o atrito administrativo em 99%", body: "", feature: "closed-office" },
@@ -66,6 +83,7 @@ const mobileAppSlides: MobileAppSlide[] = [
   { id: "parte-9-8", eyebrow: "Dados reais", title: "Com dados reais, o patrocinador deixa de comprar visibilidade e passa a comprar resultado", body: "", feature: "sponsor-data" },
   { id: "parte-9-9", eyebrow: "Caso Real", title: "A experiência com a AD Oeiras", body: "", feature: "oeiras-results" },
   { id: "parte-9-10", eyebrow: "Calculadora Final", title: "Calculadora final de benefícios", body: "", feature: "final-benefits" },
+  { id: "parte-9-11", eyebrow: "Pricing", title: "Preço", body: "", feature: "mobile-pricing" },
 ];
 
 const backofficeSlides: BackofficeSlide[] = [
@@ -110,6 +128,51 @@ const backofficeSlides: BackofficeSlide[] = [
     title: "Preço",
     body: "",
     feature: "backoffice-pricing",
+  },
+];
+
+const websiteSlides: WebsiteSlide[] = [
+  {
+    id: "parte-8-1",
+    eyebrow: "Website",
+    title: "Design moderno com tecnologia Next.js",
+    body: "Estrutura rápida, moderna e preparada para crescimento com uma experiência premium para o clube.",
+    feature: "nextjs-design",
+  },
+  {
+    id: "parte-8-2",
+    eyebrow: "Website",
+    title: "Páginas possíveis para o clube",
+    body: "História, Palmarés, Presidentes, Patrocinadores, Jogos, Agenda, Modalidades, Galeria, Notícias, Eventos.",
+    feature: "pages-catalog",
+  },
+  {
+    id: "parte-8-3",
+    eyebrow: "Website",
+    title: "Formulários de sócio com diferentes níveis de automação",
+    body: "Desde envio simples por email até integração total com a app e geração automática de quota para pagamento.",
+    feature: "forms-options",
+  },
+  {
+    id: "parte-8-4",
+    eyebrow: "Website",
+    title: "Integração com BackOffice a diferentes níveis",
+    body: "Define-se exatamente o que aparece no site, mantendo controlo de informação e comunicação.",
+    feature: "backoffice-integration",
+  },
+  {
+    id: "parte-8-5",
+    eyebrow: "Website",
+    title: "Website sempre atualizado graças ao BackOffice",
+    body: "Com ligação ao BackOffice, notícias, agenda, jogos e conteúdos ficam sempre consistentes e atualizados.",
+    feature: "always-updated",
+  },
+  {
+    id: "parte-8-6",
+    eyebrow: "Pricing",
+    title: "Pricing",
+    body: "",
+    feature: "website-pricing",
   },
 ];
 
@@ -349,7 +412,7 @@ export default function ClubIQ360Presentation({
                     setCurrentSlideId("parte-7-1");
                   }
                   if (choice === "website") {
-                    setCurrentSlideId("parte-8");
+                    setCurrentSlideId("parte-8-1");
                   }
                   if (choice === "mobile") {
                     setCurrentSlideId("parte-9-1");
@@ -363,8 +426,11 @@ export default function ClubIQ360Presentation({
               />
             ) : null}
             {currentSlide.id === "parte-7b" ? <Part7BackOfficeModel /> : null}
-            {currentSlide.id === "parte-8" ? <Part8Website /> : null}
-            {currentSlide.id === "parte-8b" ? <Part8WebsiteModel /> : null}
+            {currentSlide.id.startsWith("parte-8-") ? (
+              <Part8WebsiteDeck
+                slide={websiteSlides.find((item) => item.id === currentSlide.id) ?? websiteSlides[0]}
+              />
+            ) : null}
             {currentSlide.id.startsWith("parte-9-") ? (
               <Part9MobileDeck
                 slide={mobileAppSlides.find((item) => item.id === currentSlide.id) ?? mobileAppSlides[0]}
@@ -451,12 +517,17 @@ function buildSlides(pathChoice: PathChoice): SlideDescriptor[] {
         id: slide.id,
         label: `Parte 7.${index + 1}`,
       })),
-      { id: "parte-7b", label: "Parte 7.7" },
     ];
   }
 
   if (pathChoice === "website") {
-    return [...base, { id: "parte-8", label: "Parte 8" }, { id: "parte-8b", label: "Parte 8.2" }];
+    return [
+      ...base,
+      ...websiteSlides.map((slide, index) => ({
+        id: slide.id,
+        label: `Parte 8.${index + 1}`,
+      })),
+    ];
   }
 
   if (pathChoice === "mobile") {
@@ -1330,7 +1401,7 @@ function Part6SolutionsFoldersV2({
           <div className="absolute inset-0 opacity-10 [background-image:linear-gradient(rgba(255,255,255,0.2)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.12)_1px,transparent_1px)] [background-size:44px_44px]" />
           <div className="relative z-10 h-full">
             {activePreview === "backoffice" ? (
-              <BackOfficeFolderMockV2 clubName={clubName} />
+              <BackOfficeFolderRealImage />
             ) : activePreview === "website" ? (
               <WebsiteFolderMock clubName={clubName} clubLogoSrc={clubLogoSrc} />
             ) : (
@@ -1351,6 +1422,19 @@ function Part6SolutionsFoldersV2({
           Ver mais
         </button>
       </div>
+    </div>
+  );
+}
+
+function BackOfficeFolderRealImage() {
+  return (
+    <div className="relative h-full w-full">
+      <Image
+        src="/imagemBackOffice.png"
+        alt="BackOffice real"
+        fill
+        className="object-cover"
+      />
     </div>
   );
 }
@@ -1909,6 +1993,131 @@ function Part8WebsiteModel() {
       title="Escolha o modelo de Website"
       options={["Com BackOffice", "Sem BackOffice"]}
     />
+  );
+}
+
+function Part8WebsiteDeck({ slide }: { slide: WebsiteSlide }) {
+  return (
+    <div className="grid h-full grid-rows-[auto_1fr] gap-8">
+      <h2 className="huge-title -mt-20 pl-28 text-[58px] text-white">Website</h2>
+      <div className="grid h-full grid-cols-[1.05fr_0.95fr] items-center gap-8">
+        <div>
+          <p className="text-[11px] font-bold uppercase tracking-[0.24em] text-[var(--club-secondary)]/90">
+            {slide.eyebrow}
+          </p>
+          <h3 className="mt-3 text-[64px] font-semibold uppercase leading-[1.02] tracking-[-0.02em] text-white">
+            {slide.title}
+          </h3>
+          <p className="mt-5 max-w-[760px] text-[22px] font-semibold leading-[1.28] text-slate-200">
+            {slide.body}
+          </p>
+        </div>
+        <WebsiteFeatureVisual feature={slide.feature} />
+      </div>
+    </div>
+  );
+}
+
+function WebsiteFeatureVisual({ feature }: { feature: WebsiteFeatureKey }) {
+  if (feature === "website-pricing") {
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-8 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+        <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--club-secondary)]">Pricing</p>
+        <div className="mt-5 rounded-2xl border border-white/18 bg-[#0f172a]/70 px-6 py-7 text-center">
+          <p className="text-[56px] font-black uppercase tracking-[0.02em] text-[var(--club-primary)]">Sob orçamento</p>
+        </div>
+      </article>
+    );
+  }
+
+  if (feature === "nextjs-design") {
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+        <div className="grid grid-cols-2 gap-3">
+          <div className="rounded-2xl border border-cyan-300/35 bg-cyan-300/10 p-4">
+            <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-cyan-200">Next.js</p>
+            <p className="mt-2 text-[24px] font-black text-white">Arquitetura moderna</p>
+          </div>
+          <div className="rounded-2xl border border-emerald-300/35 bg-emerald-300/10 p-4">
+            <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-emerald-200">Performance</p>
+            <p className="mt-2 text-[24px] font-black text-white">Carregamento rápido</p>
+          </div>
+          <div className="col-span-2 rounded-2xl border border-white/12 bg-white/6 p-4">
+            <p className="text-[14px] font-semibold text-white">Design limpo, secções escaláveis e base pronta para evoluir com o clube.</p>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  if (feature === "pages-catalog") {
+    const pages = ["História", "Palmarés", "Presidentes", "Patrocinadores", "Jogos", "Agenda", "Modalidades", "Galeria", "Notícias", "Eventos"];
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+        <div className="grid grid-cols-2 gap-3">
+          {pages.map((page) => (
+            <div key={page} className="rounded-xl border border-white/12 bg-white/6 px-4 py-3 text-[16px] font-semibold text-white">
+              {page}
+            </div>
+          ))}
+        </div>
+      </article>
+    );
+  }
+
+  if (feature === "forms-options") {
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+        <div className="space-y-3">
+          <div className="rounded-2xl border border-white/14 bg-white/6 p-4">
+            <p className="text-[12px] font-bold uppercase tracking-[0.09em] text-[var(--club-secondary)]">Opção 1</p>
+            <p className="mt-2 text-[20px] font-bold text-white">Formulário com envio simples por email</p>
+          </div>
+          <div className="rounded-2xl border border-white/14 bg-white/6 p-4">
+            <p className="text-[12px] font-bold uppercase tracking-[0.09em] text-[var(--club-secondary)]">Opção 2</p>
+            <p className="mt-2 text-[20px] font-bold text-white">Formulário gera quota para pagar por email</p>
+          </div>
+          <div className="rounded-2xl border border-white/14 bg-white/6 p-4">
+            <p className="text-[12px] font-bold uppercase tracking-[0.09em] text-[var(--club-secondary)]">Opção 3</p>
+            <p className="mt-2 text-[20px] font-bold text-white">Formulário 100% integrado com a app</p>
+            <p className="mt-1 text-[14px] font-semibold text-slate-200">O sócio regista-se no site ou na app com o mesmo fluxo.</p>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  if (feature === "backoffice-integration") {
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+        <div className="grid grid-cols-3 gap-3">
+          {["Nível 1\nDados institucionais", "Nível 2\nAgenda e jogos", "Nível 3\nIntegração total"].map((level) => (
+            <div key={level} className="rounded-2xl border border-white/12 bg-white/6 p-4 text-center text-[16px] font-bold whitespace-pre-line text-white">
+              {level}
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 rounded-xl border border-white/12 bg-[#0f172a] p-4 text-[15px] font-semibold text-white/90">
+          Mostra-se apenas o que o clube quer mostrar, com controlo total sobre a visibilidade de dados.
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-6 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
+      <div className="rounded-2xl border border-white/12 bg-white/6 p-4">
+        <p className="text-[12px] font-bold uppercase tracking-[0.09em] text-[var(--club-secondary)]">Sincronização contínua</p>
+        <p className="mt-2 text-[28px] font-black text-white">Sempre atualizado</p>
+      </div>
+      <div className="mt-3 space-y-2">
+        {["Notícias", "Agenda semanal/mensal", "Registo de jogos", "Eventos e modalidades"].map((item) => (
+          <div key={item} className="rounded-xl border border-white/12 bg-white/6 px-4 py-3 text-[16px] font-semibold text-white">
+            {item}
+          </div>
+        ))}
+      </div>
+    </article>
   );
 }
 
@@ -2793,6 +3002,24 @@ function MobileFeatureVisual({
 
         <div className="sr-only">
           Benefício total: {formatCurrency(totalAnnualBenefitBeforeSponsors)} / ano
+        </div>
+      </article>
+    );
+  }
+
+  if (feature === "mobile-pricing") {
+    return (
+      <article className="w-full rounded-[30px] border border-white/14 bg-white/[0.04] p-8">
+        <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--club-secondary)]">Pricing</p>
+        <div className="mt-5 grid gap-4">
+          <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
+            <p className="text-[20px] font-bold text-white">Até 500 sócios</p>
+            <p className="mt-2 text-[44px] font-black text-[var(--club-primary)]">250€/mês</p>
+          </div>
+          <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
+            <p className="text-[20px] font-bold text-white">+500 sócios</p>
+            <p className="mt-2 text-[44px] font-black text-[var(--club-secondary)]">Sob orçamento</p>
+          </div>
         </div>
       </article>
     );
