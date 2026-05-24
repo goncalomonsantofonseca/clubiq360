@@ -20,7 +20,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans-ui), "Plus Jakarta Sans", "Segoe UI", sans-serif;
-  --font-display: var(--font-display-ui), "Syne", "Arial Black", sans-serif;
+  --font-display: var(--font-display-ui), "Archivo Black", "Arial Black", sans-serif;
 }
 
 * {
@@ -56,15 +56,15 @@ button {
 }
 
 .huge-title {
-  font-family: var(--font-display-ui), "Syne", "Arial Black", sans-serif;
+  font-family: var(--font-display-ui), "Archivo Black", "Arial Black", sans-serif;
   text-transform: uppercase;
-  letter-spacing: -0.045em;
-  line-height: 0.9;
-  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 0.94;
+  font-weight: 400;
 }
 
 .font-display {
-  font-family: var(--font-display-ui), "Syne", "Arial Black", sans-serif;
+  font-family: var(--font-display-ui), "Archivo Black", "Arial Black", sans-serif;
 }
 
 .font-sans {
@@ -313,7 +313,7 @@ button {
 .clubiq-payment-exact .payment-primary {
   width: 100%;
   padding: 0.72rem 0.8rem;
-  background: #e52420;
+  background: var(--club-primary);
   color: #fff;
   font-size: 0.73rem;
 }
@@ -326,8 +326,8 @@ button {
 .clubiq-payment-exact .payment-summary-card {
   padding: 0.7rem;
   border-radius: 0.95rem;
-  background: rgba(255, 246, 246, 0.94);
-  border: 2px solid rgba(229, 36, 32, 0.22);
+  background: color-mix(in srgb, var(--club-primary) 7%, #fff);
+  border: 2px solid color-mix(in srgb, var(--club-primary) 24%, transparent);
 }
 
 .clubiq-payment-exact .plan-option,

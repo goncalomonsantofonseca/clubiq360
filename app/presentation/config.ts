@@ -1,4 +1,8 @@
 import type { PresentationConfig, SolutionKey } from "@/app/presentation/types";
+import {
+  activeClubKey as selectedClubKey,
+  clubPresets as configuredClubPresets,
+} from "@/app/presentation/clubs";
 
 const brandPalette = {
   navy: "#0f172a",
@@ -26,6 +30,8 @@ const clubPresets = {
 } as const;
 
 const activeClubKey: keyof typeof clubPresets = "damaiense";
+void clubPresets;
+void activeClubKey;
 
 const companyConfig = {
   brandName: "ClubIQ",
@@ -181,7 +187,7 @@ const presentationContent = {
 
 export const presentationConfig: PresentationConfig = {
   brandPalette,
-  clubConfig: clubPresets[activeClubKey],
+  clubConfig: configuredClubPresets[selectedClubKey],
   companyConfig,
   solutionCatalog,
   presentationContent,

@@ -299,7 +299,7 @@ export default function ClubIQ360Presentation({
   const availableMoments = getAvailableMomentsUntilCurrentMonth();
 
   const navigate = (delta: 1 | -1) => {
-    if (resolvedSlideId === "parte-3" && availableMoments.length > 0) {
+    if (false && resolvedSlideId === "parte-3" && availableMoments.length > 0) {
       const momentIndex = availableMoments.indexOf(activeMoment);
       if (delta === 1 && momentIndex < availableMoments.length - 1) {
         const nextMoment = availableMoments[momentIndex + 1];
@@ -543,12 +543,69 @@ function buildSlides(pathChoice: PathChoice): SlideDescriptor[] {
   return base;
 }
 
+function normalizeHex(input: string): string {
+  const hex = input.trim().replace("#", "");
+  if (hex.length === 3) {
+    return `#${hex[0]}${hex[0]}${hex[1]}${hex[1]}${hex[2]}${hex[2]}`.toLowerCase();
+  }
+  if (hex.length === 6) {
+    return `#${hex}`.toLowerCase();
+  }
+  return "#000000";
+}
+
+function hexToRgb(hex: string): { r: number; g: number; b: number } {
+  const normalized = normalizeHex(hex);
+  const value = normalized.slice(1);
+  return {
+    r: Number.parseInt(value.slice(0, 2), 16),
+    g: Number.parseInt(value.slice(2, 4), 16),
+    b: Number.parseInt(value.slice(4, 6), 16),
+  };
+}
+
+function rgbToHex(r: number, g: number, b: number): string {
+  const toHex = (n: number) => Math.max(0, Math.min(255, Math.round(n))).toString(16).padStart(2, "0");
+  return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+}
+
+function relativeLuminance(hex: string): number {
+  const { r, g, b } = hexToRgb(hex);
+  const toLinear = (channel: number) => {
+    const c = channel / 255;
+    return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4;
+  };
+  const R = toLinear(r);
+  const G = toLinear(g);
+  const B = toLinear(b);
+  return 0.2126 * R + 0.7152 * G + 0.0722 * B;
+}
+
+function mixWithWhite(hex: string, amount: number): string {
+  const { r, g, b } = hexToRgb(hex);
+  return rgbToHex(
+    r + (255 - r) * amount,
+    g + (255 - g) * amount,
+    b + (255 - b) * amount
+  );
+}
+
+function getReadablePrimaryTextColor(primary: string): string {
+  const normalized = normalizeHex(primary);
+  const luminance = relativeLuminance(normalized);
+  if (luminance < 0.16) return mixWithWhite(normalized, 0.62);
+  if (luminance < 0.26) return mixWithWhite(normalized, 0.48);
+  return normalized;
+}
+
 function buildThemeStyle(config: PresentationConfig): ThemeStyle {
+  const primary = config.clubConfig.clubColors.primary;
   return {
     "--brand-navy": config.brandPalette.navy,
     "--brand-orange": config.brandPalette.orange,
     "--brand-white": config.brandPalette.white,
-    "--club-primary": config.clubConfig.clubColors.primary,
+    "--club-primary": primary,
+    "--club-primary-text": getReadablePrimaryTextColor(primary),
     "--club-secondary": config.clubConfig.clubColors.secondary,
     "--club-accent": config.clubConfig.clubColors.accent,
     "--club-surface": config.clubConfig.clubColors.surface,
@@ -663,7 +720,7 @@ function Part1Cover({ config }: { config: PresentationConfig }) {
           <div className="space-y-5">
           <h1 className="huge-title text-[72px] text-white">
             O Universo Digital do{" "}
-            <span className="text-[var(--club-primary)]">
+            <span className="text-[var(--club-primary-text)]">
               {config.clubConfig.shortName}
             </span>
           </h1>
@@ -805,7 +862,7 @@ function Part2Who({
 function ValueCard({ title, text }: { title: string; text: string }) {
   return (
     <div className="glass-card-soft h-[108px] rounded-[20px] p-3">
-      <p className="eyebrow-label font-display text-[11px] text-[var(--brand-orange)]">{title}</p>
+      <p className="text-[13px] font-extrabold uppercase tracking-[0.08em] text-[var(--brand-orange)]">{title}</p>
       <p className="mt-1.5 text-[15px] font-semibold leading-[1.25] text-white">{text}</p>
     </div>
   );
@@ -818,7 +875,7 @@ function Part3Timeline({
   activeMoment: MomentKey;
   onSetMoment: (key: MomentKey) => void;
 }) {
-  const active = timelineMoments[activeMoment];
+  const active = timelineMoments["abr-a"];
   const maxMonthIndex = Math.max(currentMonthIndex, 1);
   const activeMonth = momentMonthByKey[activeMoment];
   const progressPercent = (activeMonth / maxMonthIndex) * 100;
@@ -831,8 +888,8 @@ function Part3Timeline({
   return (
     <div className="grid h-full grid-rows-[auto_auto_1fr] gap-6">
       <div className="space-y-5">
-        <h2 className="huge-title -mt-20 pl-28 text-[58px] whitespace-nowrap text-white">A StartUp</h2>
-        <div className="mt-14 pr-8">
+        <h2 className="huge-title -mt-20 pl-28 text-[58px] whitespace-nowrap text-white">Destaque</h2>
+        <div className="hidden">
           <div className="relative">
             <div className="absolute left-0 right-0 top-5 h-[2px] bg-white/30" />
             <div
@@ -885,8 +942,8 @@ function Part3Timeline({
             <p className="mt-2 text-[18px] font-bold uppercase tracking-[0.12em] text-slate-300">
               {active.month}
             </p>
-            <h3 className="mt-4 text-[42px] font-semibold text-white">{active.title}</h3>
-            <p className="mt-4 text-[26px] font-semibold text-slate-100">{active.detail}</p>
+            <h3 className="mt-4 text-[42px] font-semibold text-white">Registo da marca na União Europeia</h3>
+            <p className="mt-4 text-[26px] font-semibold text-slate-100">Consolidação legal da marca ClubIQ.</p>
           </div>
           <div className="flex justify-end">
             {active.imageSrc ? (
@@ -917,7 +974,7 @@ function Part4Importance() {
         <div className="relative flex h-full items-center p-2">
           <h2 className="huge-title text-[64px] leading-[1.05] text-white">
             Os Sócios são o motor{" "}
-            <span className="text-[var(--club-primary)]">Emocional</span> e{" "}
+            <span className="text-[var(--club-primary-text)]">Emocional</span> e{" "}
             <span className="text-[var(--club-secondary)]">Financeiro</span> de um clube
           </h2>
         </div>
@@ -965,7 +1022,7 @@ function Part4Decline({ isExpanded }: { isExpanded: boolean }) {
               <defs>
                 <linearGradient id="declineRiseLine" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="var(--club-primary)" />
-                  <stop offset="58%" stopColor="var(--brand-orange)" />
+                  <stop offset="58%" stopColor="var(--club-secondary)" />
                   <stop offset="100%" stopColor="var(--club-secondary)" />
                 </linearGradient>
               </defs>
@@ -985,7 +1042,7 @@ function Part4Decline({ isExpanded }: { isExpanded: boolean }) {
                 strokeLinecap="round"
               />
 
-              <circle cx="260" cy="228" r="18" fill="rgba(15,23,42,0.9)" stroke="var(--brand-orange)" strokeWidth="5" />
+              <circle cx="260" cy="228" r="18" fill="rgba(15,23,42,0.9)" stroke="var(--club-secondary)" strokeWidth="5" />
               <circle cx="260" cy="228" r="16" fill="#0f172a" />
               <image
                 href="/logos/ClubIQLogo.png"
@@ -1025,7 +1082,7 @@ function Part5Archaic() {
           <defs>
             <linearGradient id="dropRise" x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%" stopColor="var(--club-primary)" />
-              <stop offset="52%" stopColor="var(--brand-orange)" />
+              <stop offset="52%" stopColor="var(--club-secondary)" />
               <stop offset="100%" stopColor="var(--club-secondary)" />
             </linearGradient>
           </defs>
@@ -1043,7 +1100,7 @@ function Part5Archaic() {
             strokeWidth="8"
             strokeLinecap="round"
           />
-          <circle cx="260" cy="228" r="18" fill="rgba(15,23,42,0.9)" stroke="var(--brand-orange)" strokeWidth="5" />
+          <circle cx="260" cy="228" r="18" fill="rgba(15,23,42,0.9)" stroke="var(--club-secondary)" strokeWidth="5" />
           <circle cx="260" cy="228" r="16" fill="#0f172a" />
           <image
             href="/logos/ClubIQLogo.png"
@@ -1610,11 +1667,11 @@ function MobileFolderMockV2({
 
           <div className="mt-4 space-y-3 text-[#1f2937]">
             <div>
-              <p className="text-[10px] font-bold">Email <span className="text-[var(--club-primary)]">*</span></p>
+              <p className="text-[10px] font-bold">Email <span className="text-[var(--club-primary-text)]">*</span></p>
               <div className="mt-1 rounded-xl border border-gray-200 bg-white px-3 py-2 text-[9px] text-gray-400">Exemplo@gmail.com</div>
             </div>
             <div>
-              <p className="text-[10px] font-bold">Palavra-passe <span className="text-[var(--club-primary)]">*</span></p>
+              <p className="text-[10px] font-bold">Palavra-passe <span className="text-[var(--club-primary-text)]">*</span></p>
               <div className="mt-1 rounded-xl border border-gray-200 bg-white px-3 py-2 text-[9px] text-gray-400">Palavra-passe</div>
             </div>
             <div className="flex items-center gap-2 text-[8px] text-gray-500">
@@ -1693,7 +1750,7 @@ function BackofficeFeatureVisual({ feature }: { feature: BackofficeFeatureKey })
         <div className="mt-5 grid gap-4">
           <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
             <p className="text-[20px] font-bold text-white">Sem pagamentos</p>
-            <p className="mt-2 text-[44px] font-black text-[var(--club-primary)]">20€/mês</p>
+            <p className="mt-2 text-[44px] font-black text-[var(--club-primary-text)]">20€/mês</p>
           </div>
           <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
             <p className="text-[20px] font-bold text-white">Com pagamentos</p>
@@ -2024,7 +2081,7 @@ function WebsiteFeatureVisual({ feature }: { feature: WebsiteFeatureKey }) {
       <article className="w-full rounded-[30px] border border-white/14 bg-[#0a1323] p-8 shadow-[0_24px_60px_rgba(2,8,23,0.5)]">
         <p className="text-[12px] font-bold uppercase tracking-[0.16em] text-[var(--club-secondary)]">Pricing</p>
         <div className="mt-5 rounded-2xl border border-white/18 bg-[#0f172a]/70 px-6 py-7 text-center">
-          <p className="text-[56px] font-black uppercase tracking-[0.02em] text-[var(--club-primary)]">Sob orçamento</p>
+          <p className="text-[56px] font-black uppercase tracking-[0.02em] text-[var(--club-primary-text)]">Sob orçamento</p>
         </div>
       </article>
     );
@@ -2299,7 +2356,7 @@ function PaymentQuotaQuickDemoLegacy({
 
           {step === "mbway" ? (
             <div className="text-center">
-              <div className="mx-auto h-11 w-11 rounded-full bg-[var(--club-primary)]/12 text-[12px] font-bold leading-[44px] text-[var(--club-primary)]">MB</div>
+              <div className="mx-auto h-11 w-11 rounded-full bg-[var(--club-primary)]/12 text-[12px] font-bold leading-[44px] text-[var(--club-primary-text)]">MB</div>
               <p className="mt-3 text-[11px] font-semibold text-[#0f172a]">Aguardando confirmação MB WAY</p>
               <p className="mt-1 text-[9px] text-gray-500">Expira em 03:48</p>
             </div>
@@ -2666,8 +2723,8 @@ function MobileFeatureVisual({
     return (
       <div className="grid h-full grid-rows-[auto_1fr] gap-4">
         <div className="relative w-full rounded-2xl border border-white/14 bg-white/[0.04] p-5">
-          <div className="pointer-events-none absolute right-6 top-4 rotate-[-12deg] rounded-md border-2 border-red-500/90 bg-red-500/12 px-3 py-1">
-            <span className="text-[20px] font-black uppercase tracking-[0.14em] text-red-500">Closed</span>
+          <div className="pointer-events-none absolute right-6 top-4 rotate-[-12deg] rounded-md border-2 border-[color:var(--club-primary)]/90 bg-[color:var(--club-primary)]/12 px-3 py-1">
+            <span className="text-[20px] font-black uppercase tracking-[0.14em] text-[var(--club-primary-text)]">Closed</span>
           </div>
           <div className="flex items-center gap-3">
             <Image src={clubLogoSrc} alt={clubName} width={56} height={56} className="h-14 w-14 object-contain" />
@@ -2806,7 +2863,7 @@ function MobileFeatureVisual({
             O adepto pode comprar um carro, roupa, comida, jantar ou aparelhos tecnológicos pelo telemóvel...
           </p>
           <p className="mt-4 w-full text-center text-[112px] font-black uppercase leading-[0.95] tracking-[-0.03em] text-white">
-            MAS NÃO CONSEGUE <span className="text-[var(--club-primary)]">TORNAR-SE SÓCIO</span>?!
+            MAS NÃO CONSEGUE <span className="text-[var(--club-primary-text)]">TORNAR-SE SÓCIO</span>?!
           </p>
         </div>
       </div>
@@ -2847,7 +2904,7 @@ function MobileFeatureVisual({
           A montra diária que os patrocinadores vão querer ocupar
         </p>
         <p className="max-w-[1460px] text-[88px] font-black uppercase leading-[1.01] tracking-[-0.03em] text-white">
-          A APP CRIA UMA <span className="text-[var(--club-primary)]">NOVA MONTRA DE EXPOSIÇÃO</span> NO CLUBE PARA <span className="text-[var(--club-primary)]">PATROCINADORES</span>.
+          A APP CRIA UMA <span className="text-[var(--club-primary-text)]">NOVA MONTRA DE EXPOSIÇÃO</span> NO CLUBE PARA <span className="text-[var(--club-primary-text)]">PATROCINADORES</span>.
         </p>
         <p className="mt-7 max-w-[1420px] text-[20px] font-semibold leading-[1.3] text-slate-300">
           centenas de sócios a abrir a app diariamente dão ao clube um novo espaço de visibilidade, presença diária e valor comercial para vender a patrocinadores e parceiros
@@ -2917,7 +2974,7 @@ function MobileFeatureVisual({
 
           <section className="grid grid-cols-2 gap-10">
             <div className="flex items-center justify-center gap-4">
-              <p className="text-[64px] font-black leading-none text-[var(--club-primary)]">{oeirasCounters.registeredInApp}%</p>
+              <p className="text-[64px] font-black leading-none text-[var(--club-primary-text)]">{oeirasCounters.registeredInApp}%</p>
               <p className="text-[24px] font-extrabold uppercase leading-[1.1] text-white">
                 Dos sócios registados na app
               </p>
@@ -3014,7 +3071,7 @@ function MobileFeatureVisual({
         <div className="mt-5 grid gap-4">
           <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
             <p className="text-[20px] font-bold text-white">Até 500 sócios</p>
-            <p className="mt-2 text-[44px] font-black text-[var(--club-primary)]">250€/mês</p>
+            <p className="mt-2 text-[44px] font-black text-[var(--club-primary-text)]">200€/mês</p>
           </div>
           <div className="rounded-2xl border border-white/18 bg-[#0f172a]/70 p-5">
             <p className="text-[20px] font-bold text-white">+500 sócios</p>
