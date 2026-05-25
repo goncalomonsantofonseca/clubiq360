@@ -74,7 +74,7 @@ interface WebsiteSlide {
 
 const mobileAppSlides: MobileAppSlide[] = [
   { id: "parte-9-1", eyebrow: "A Solução", title: "Reduzimos o atrito administrativo em 99%", body: "", feature: "payment-demo" },
-  { id: "parte-9-2", eyebrow: "A Solução", title: "Reduzimos o atrito administrativo em 99%", body: "", feature: "closed-office" },
+  { id: "parte-9-2", eyebrow: "A Solução", title: "O adepto faz-se sócio onde e quando quiser", body: "", feature: "closed-office" },
   { id: "parte-9-3", eyebrow: "A Solução", title: "Se não há entraves aos pagamentos, o clube não perde quotas", body: "", feature: "quota-notifications" },
   { id: "parte-9-4", eyebrow: "Retorno do Investimento", title: "Sabia que ao reduzir a desistência de sócios de 25% para 5% está a poupar 9.600€ por ano?", body: "", feature: "retention-calculator" },
   { id: "parte-9-5", eyebrow: "", title: "", body: "", feature: "mobile-commerce-gap" },
@@ -1487,7 +1487,7 @@ function BackOfficeFolderRealImage() {
   return (
     <div className="relative h-full w-full">
       <Image
-        src="/imagemBackOffice.png"
+        src="/imagemBackoffice.png"
         alt="BackOffice real"
         fill
         className="object-cover"
